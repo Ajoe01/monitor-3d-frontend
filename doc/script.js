@@ -301,7 +301,7 @@ socket.on('mqttMessage', (dataArray) => {
   baseFill.style.height = `${percentageBase}%`;
   
   // Feedrate
-  const maxFeed = 300;
+  const maxFeed = 5000;
   feedrateMax.textContent = maxFeed;
   const percentageFeedrate = Math.min((feedrate / maxFeed) * 100, 100);
   feedrateFill.style.width = `${percentageFeedrate}%`;
@@ -491,4 +491,5 @@ window.addEventListener('load', () => {
 window.addEventListener('resize', () => {
   drawFeedrateChart();
 });
+
 
