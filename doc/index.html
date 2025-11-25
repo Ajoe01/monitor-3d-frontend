@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor Impresora 3D</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🖨️ Monitor de Impresora 3D en Tiempo Real</h1>
+    
+    <div class="status-bar">
+      <div class="status-indicator">
+        <div class="status-dot" id="ws-status-dot"></div>
+        <span><strong>Estado:</strong> <span id="ws-status">Desconectado</span></span>
+      </div>
+      <div>
+        <span><strong>Última actualización:</strong> <span id="last-update">--:--:--</span></span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Temperatura Extrusor -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🔥</span>
+          Temperatura Extrusor
+        </div>
+        <div class="temp-gauge">
+          <div class="gauge-bg"></div>
+          <div class="gauge-fill" id="extrusor-fill"></div>
+          <div class="gauge-value" id="extrusor-value">0°C</div>
+          <div class="gauge-label">Target: <span id="extrusor-target">0</span>°C</div>
+        </div>
+      </div>
+
+      <!-- Temperatura Base -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🌡️</span>
+          Temperatura Base
+        </div>
+        <div class="temp-gauge">
+          <div class="gauge-bg"></div>
+          <div class="gauge-fill" id="base-fill"></div>
+          <div class="gauge-value" id="base-value">0°C</div>
+          <div class="gauge-label">Target: <span id="base-target">0</span>°C</div>
+        </div>
+      </div>
+
+      <!-- Feedrate -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">⚡</span>
+          Velocidad (Feedrate)
+        </div>
+        <div class="feedrate-container">
+          <div class="feedrate-bar">
+            <div class="feedrate-fill" id="feedrate-fill">0 mm/s</div>
+          </div>
+          <div style="margin-top: 15px; text-align: center;">
+            <span style="color: #6b7280;">Máximo: <span id="feedrate-max">150</span> mm/s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfica de Feedrate -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">📈</span>
+        Historial de Velocidad (Feedrate)
+      </div>
+      <div class="chart-container">
+        <canvas id="feedrate-chart"></canvas>
+      </div>
+      <div class="chart-stats">
+        <div class="stat-item">
+          <span class="stat-label">Actual:</span>
+          <span class="stat-value" id="chart-current">0 mm/s</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Promedio:</span>
+          <span class="stat-value" id="chart-avg">0 mm/s</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Máximo:</span>
+          <span class="stat-value" id="chart-max">0 mm/s</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Mínimo:</span>
+          <span class="stat-value" id="chart-min">0 mm/s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modelo 3D de la Impresora -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">🖨️</span>
+        Modelo 3D - Posición del Cabezal
+      </div>
+      <div id="printer-3d-container"></div>
+      <div class="axis-container">
+        <div class="axis-item">
+          <div class="axis-label">Eje X</div>
+          <div class="axis-value" id="pos-x">0.00</div>
+        </div>
+        <div class="axis-item">
+          <div class="axis-label">Eje Y</div>
+          <div class="axis-value" id="pos-y">0.00</div>
+        </div>
+        <div class="axis-item">
+          <div class="axis-label">Eje Z</div>
+          <div class="axis-value" id="pos-z">0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log de Mensajes -->
+    <div class="log-container">
+      <div class="card-title">
+        <span class="icon">📋</span>
+        Registro de Actualizaciones
+      </div>
+      <div id="log-list"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://monitor-3d-backend.onrender.com/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
